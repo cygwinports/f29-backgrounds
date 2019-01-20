@@ -1,0 +1,49 @@
+NAME="f29-backgrounds"
+VERSION=29.1.3
+RELEASE=1
+CATEGORY="X11"
+SUMMARY="Fedora 29 desktop wallpaper"
+DESCRIPTION="Default wallpaper for the Fedora 29 release, along with a
+collection of selected wallpapers contributed by the Fedora community."
+HOMEPAGE="https://fedoraproject.org/wiki/Design"
+SRC_URI="https://github.com/fedoradesign/backgrounds/releases/download/v${VERSION}/${NAME}-${VERSION}.tar.xz"
+SRC_DIR=${NAME}
+
+ARCH=noarch
+
+PKG_NAMES="${NAME} ${NAME}-extras ${NAME}-animated"
+f29_backgrounds_DOCS="Attribution CC-BY-SA-4.0 README.md"
+f29_backgrounds_CONTENTS="
+	usr/share/backgrounds/f29/default/
+	usr/share/backgrounds/xfce/f29.png
+	usr/share/gnome-background-properties/f29.xml
+	usr/share/mate-background-properties/f29.xml
+	usr/share/wallpapers/F29/
+"
+f29_backgrounds_animated_SUMMARY="Fedora 29 animated wallpapers"
+f29_backgrounds_animated_DOCS="Attribution CC-BY-SA-4.0"
+f29_backgrounds_animated_CONTENTS="
+	usr/share/backgrounds/f29/default-animated/
+	usr/share/gnome-background-properties/f29-animated.xml
+	usr/share/mate-background-properties/f29-animated.xml
+"
+f29_backgrounds_extras_SUMMARY="Fedora 29 extra wallpapers"
+f29_backgrounds_extras_DOCS="Attribution-Extras CC-BY-SA-4.0"
+f29_backgrounds_extras_CONTENTS="
+	usr/share/backgrounds/f29/extras/
+	usr/share/backgrounds/xfce/f29-*
+	usr/share/gnome-background-properties/f29-extras.xml
+	usr/share/mate-background-properties/f29-extras.xml
+	usr/share/wallpapers/F29_*/
+"
+
+src_compile() {
+	cd ${S}
+	cygmake
+}
+
+src_install() {
+	cd ${S}
+	cyginstall
+	mv ${D}/usr/share/{xfce4/backdrops,backgrounds/xfce}
+}
